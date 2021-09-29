@@ -21,19 +21,34 @@ function validarFormulario(e) {
 }
 
 
-function buscarImagenes() {
-    const termino = document.querySelector('#termino').value
+// function buscarImagenes() {
+//     const termino = document.querySelector('#termino').value
 
+//     const key = '23425534-46ce719085b4185715c2c9c3a'
+//     const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=${registroPorPagina}&page=${paginaActual}`
+
+//     fetch(url)
+//         .then(respuesta => respuesta.json())
+//         .then(datos => {
+//             totalPaginas = calcularPaginas(datos.totalHits)//totalhits total images
+//             mostrarImagenes(datos.hits)
+//         })
+// }
+
+async function buscarImagenes() {
+    const termino = document.querySelector('#termino').value
 
     const key = '23425534-46ce719085b4185715c2c9c3a'
     const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=${registroPorPagina}&page=${paginaActual}`
 
-    fetch(url)
-        .then(respuesta => respuesta.json())
-        .then(datos => {
-            totalPaginas = calcularPaginas(datos.totalHits)//totalhits total images
-            mostrarImagenes(datos.hits)
-        })
+    try {
+        const respuesta = await fetch(url)
+        const datos = await respuesta.json()
+        totalPaginas = calcularPaginas(datos.totalHits)//totalhits total images
+        mostrarImagenes(datos.hits)
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 
